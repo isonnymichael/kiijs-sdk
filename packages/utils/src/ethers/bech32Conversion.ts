@@ -1,6 +1,5 @@
-import { fromBech32 } from '@cosmjs/encoding';
-import { isAddress } from 'ethers';
-import { toBech32 } from '@cosmjs/encoding';
+import { fromBech32, toBech32, toHex } from '@cosmjs/encoding';
+import { getAddress, isAddress } from 'ethers';
 
 /**
  * Function to turn a kii bech32 into an associated hex address
@@ -12,14 +11,14 @@ export function Bech32ToHex(bechAddress: string): string | null {
   const { prefix, data } = fromBech32(bechAddress);
   if (prefix !== 'kii') return null;
 
-  const hex = '0x' + Buffer.from(data).toString('hex');
+  const hex = getAddress(toHex(data));
   return hex;
 }
 /**
  * Function to turn a hex address into a respective bech32 kii address
  * @category Cosmos Interoperability
  */
-export async function HexToBech32(wallet: string) {
+export function HexToBech32(wallet: string) {
   if (!wallet || !wallet.startsWith('0x') || !isAddress(wallet)) {
     return null;
   }
