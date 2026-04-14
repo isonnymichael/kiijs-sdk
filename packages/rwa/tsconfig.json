@@ -7,7 +7,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true, // Generate declaration files
-    "outDir": "./dist/types", // Output directory for compiled JavaScript
+    "outDir": "./dist/types", // Output directory for declaration files
     "rootDir": "./src" // Root directory of TypeScript source files
   },
   "include": ["src/**/*.ts"],

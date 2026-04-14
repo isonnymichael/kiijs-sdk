@@ -16,6 +16,10 @@
     "lint": {
       "outputs": []
     },
+    "codegen": {
+      "outputs": ["src/**"],
+      "cache": false
+    },
     "clean": {
       "cache": false
     }

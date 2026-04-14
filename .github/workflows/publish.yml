@@ -32,7 +32,7 @@ jobs:
           yarn config set npmAuthToken ${{ secrets.npm_token }}
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Build all packages
         run: yarn build
@@ -45,26 +45,31 @@ jobs:
         run: yarn test
 
       - name: Publish @kiichain/kiijs-proto
+        continue-on-error: true
         run: cd packages/proto && yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Publish @kiichain/kiijs-lcd
+        continue-on-error: true
         run: cd packages/lcd && yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Publish @kiichain/kiijs-utils
+        continue-on-error: true
         run: cd packages/utils && yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Publish @kiichain/kiijs-evm
+        continue-on-error: true
         run: cd packages/evm && yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Publish @kiichain/kiijs-rwa
+        continue-on-error: true
         run: cd packages/rwa && yarn npm publish --access public
         env:
           YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
