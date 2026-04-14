@@ -4,9 +4,21 @@
   "author": "kiiglobal.io <dev@kiiglobal.io>",
   "type": "module",
   "description": "JS SDK for kiichain protofiles",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
   "homepage": "https://github.com/KiiChain/kiijs-sdk",
   "license": "Apache-2.0",
   "overrides": {
@@ -31,12 +43,9 @@
     "url": "https://github.com/KiiChain/kiijs-sdk/issues"
   },
   "scripts": {
-    "copy": "npx copyfiles -f ../../LICENSE README.md package.json dist",
     "clean": "npx rimraf dist",
-    "prepare": "npm run build",
+    "build": "bun run ../../scripts/build.ts",
     "codegen": "npx ts-node scripts/codegen.ts",
-    "build": "npm run clean && npx tsc && npx tsc -p tsconfig.declaration.json && npm run copy",
-    "build:dev": "npm run clean && npm run codegen && npx tsc --declarationMap && npx tsc -p tsconfig.declaration.json && npm run copy",
     "lint": "npx eslint . --fix",
     "test": "npx jest",
     "test:ci": "npx jest",
