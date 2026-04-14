@@ -35,7 +35,7 @@
     "docs": "npx typedoc --out docs",
     "test": "npx jest",
     "test:ci": "npx jest",
-    "lint": "npx eslint --ext .ts",
+    "lint": "npx eslint src/",
     "generate": "wagmi generate"
   },
   "homepage": "https://github.com/KiiChain/kiijs-sdk#readme",

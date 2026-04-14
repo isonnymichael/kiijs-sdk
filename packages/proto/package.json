@@ -46,7 +46,7 @@
     "clean": "npx rimraf dist",
     "build": "bun run ../../scripts/build.ts",
     "codegen": "npx ts-node scripts/codegen.ts",
-    "lint": "npx eslint . --fix",
+    "lint": "npx eslint src/",
     "test": "npx jest",
     "test:ci": "npx jest",
     "test:watch": "npx jest --watch"

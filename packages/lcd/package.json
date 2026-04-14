@@ -46,7 +46,7 @@
     "clean": "npx rimraf dist",
     "build": "bun run ../../scripts/build.ts",
     "codegen": "npx tsx scripts/codegen.ts",
-    "lint": "npx eslint . --fix"
+    "lint": "npx eslint src/"
   },
   "devDependencies": {
     "swagger-typescript-api": "^13.2.13",
