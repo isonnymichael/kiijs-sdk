@@ -24,10 +24,10 @@ jobs:
         run: corepack enable
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Run ESLint
         run: yarn lint
 
       - name: Check formatting with Prettier
-        run: yarn prettier --check "**/*.{ts,tsx}" --ignore-path .prettierignore
+        run: yarn format:check

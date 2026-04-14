@@ -20,13 +20,16 @@ jobs:
         with:
           node-version: "20"
 
-      # Install Yarn (modern Berry)
+      - uses: oven-sh/setup-bun@v2
+
       - name: Setup Yarn
         run: |
           corepack enable
-          yarn install --no-immutable
+          yarn install
 
-      # Run tests with coverage
+      - name: Build packages
+        run: yarn build
+
       - name: Test ${{ matrix.package }}
         working-directory: ./packages/${{ matrix.package }}
         env:
