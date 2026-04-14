@@ -47,9 +47,9 @@
     "build": "bun run ../../scripts/build.ts",
     "codegen": "npx ts-node scripts/codegen.ts",
     "lint": "npx eslint src/",
-    "test": "npx jest",
-    "test:ci": "npx jest",
-    "test:watch": "npx jest --watch"
+    "test": "yarn jest",
+    "test:ci": "yarn jest",
+    "test:watch": "yarn jest --watch"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

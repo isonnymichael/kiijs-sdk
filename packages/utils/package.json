@@ -33,8 +33,8 @@
     "prebuild": "npx rimraf dist",
     "build": "bun run ../../scripts/build.ts",
     "docs": "npx typedoc --out docs",
-    "test": "npx jest",
-    "test:ci": "npx jest",
+    "test": "yarn jest",
+    "test:ci": "yarn jest",
     "lint": "npx eslint src/"
   },
   "homepage": "https://github.com/KiiChain/kiijs-sdk#readme",
