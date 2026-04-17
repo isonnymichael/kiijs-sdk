@@ -1,11 +1,10 @@
 /**
  * Shared build script for all packages.
- * Uses Bun for ESM/CJS bundling and tsc for type declarations.
+ * Uses Bun's JS API for ESM/CJS bundling and tsc for type declarations.
  *
  * Usage: bun run scripts/build.ts
  * Run from within a package directory.
  */
-import { execSync } from 'child_process';
 import { rmSync, existsSync, readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 
@@ -24,7 +23,6 @@ const externals: string[] = [
   ...Object.keys(pkg.peerDependencies || {}),
   ...Object.keys(pkg.optionalDependencies || {}),
 ];
-const externalFlags = externals.map((dep) => `--external=${dep}`).join(' ');
 
 // Clean dist
 const distDir = resolve(cwd, 'dist');
@@ -35,19 +33,45 @@ if (existsSync(distDir)) {
 console.log(`Building ${pkg.name}...`);
 
 try {
-  // Build ESM with Bun
+  // Build ESM with Bun's JS API
   console.log('  → ESM bundle');
-  execSync(
-    `bun build ./src/index.ts --outdir ./dist/esm --target=node --format=esm --splitting --sourcemap=external ${externalFlags}`,
-    { cwd, stdio: 'inherit' },
-  );
+  const esmResult = await Bun.build({
+    entrypoints: [entrypoint],
+    outdir: resolve(cwd, 'dist/esm'),
+    target: 'node',
+    format: 'esm',
+    splitting: true,
+    sourcemap: 'external',
+    external: externals,
+  });
 
-  // Build CJS with Bun (no splitting — CJS doesn't support it)
+  if (!esmResult.success) {
+    console.error('ESM build errors:');
+    for (const log of esmResult.logs) {
+      console.error(log);
+    }
+    process.exit(1);
+  }
+
+  // Build CJS with Bun's JS API (no splitting — CJS doesn't support it)
   console.log('  → CJS bundle');
-  execSync(
-    `bun build ./src/index.ts --outdir ./dist/cjs --target=node --format=cjs --sourcemap=external ${externalFlags}`,
-    { cwd, stdio: 'inherit' },
-  );
+  const cjsResult = await Bun.build({
+    entrypoints: [entrypoint],
+    outdir: resolve(cwd, 'dist/cjs'),
+    target: 'node',
+    format: 'cjs',
+    splitting: false,
+    sourcemap: 'external',
+    external: externals,
+  });
+
+  if (!cjsResult.success) {
+    console.error('CJS build errors:');
+    for (const log of cjsResult.logs) {
+      console.error(log);
+    }
+    process.exit(1);
+  }
 
   // Write CJS package.json so Node resolves .js files as CommonJS
   // even when the parent package has "type": "module"
@@ -58,12 +82,16 @@ try {
     JSON.stringify({ type: 'commonjs' }, null, 2) + '\n',
   );
 
-  // Build type declarations with tsc
+  // Build type declarations with tsc (still needs CLI — no JS API for tsc)
   console.log('  → Type declarations');
-  execSync(`npx tsc --project ./tsconfig.declaration.json`, {
-    cwd,
-    stdio: 'inherit',
-  });
+  const tscResult = Bun.spawnSync(
+    ['npx', 'tsc', '--project', './tsconfig.declaration.json'],
+    { cwd, stdio: ['inherit', 'inherit', 'inherit'] },
+  );
+
+  if (tscResult.exitCode !== 0) {
+    throw new Error('tsc failed');
+  }
 } catch (error) {
   console.error(`✗ ${pkg.name} build failed`);
   process.exit(1);
