@@ -22,6 +22,7 @@ if (!existsSync(entrypoint)) {
 const externals: string[] = [
   ...Object.keys(pkg.dependencies || {}),
   ...Object.keys(pkg.peerDependencies || {}),
+  ...Object.keys(pkg.optionalDependencies || {}),
 ];
 const externalFlags = externals.map((dep) => `--external=${dep}`).join(' ');
 
