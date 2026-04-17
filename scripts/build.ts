@@ -32,7 +32,7 @@ if (existsSync(distDir)) {
 
 console.log(`Building ${pkg.name}...`);
 
-try {
+async function build() {
   // Build ESM with Bun's JS API
   console.log('  → ESM bundle');
   const esmResult = await Bun.build({
@@ -92,9 +92,11 @@ try {
   if (tscResult.exitCode !== 0) {
     throw new Error('tsc failed');
   }
-} catch (error) {
-  console.error(`✗ ${pkg.name} build failed`);
-  process.exit(1);
 }
 
-console.log(`✓ ${pkg.name} built successfully`);
+build()
+  .then(() => console.log(`✓ ${pkg.name} built successfully`))
+  .catch(() => {
+    console.error(`✗ ${pkg.name} build failed`);
+    process.exit(1);
+  });
