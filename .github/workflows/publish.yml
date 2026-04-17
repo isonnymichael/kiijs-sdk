@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -24,12 +25,6 @@ jobs:
 
       - name: Setup Yarn
         run: corepack enable
-
-      - name: Configure registry
-        run: |
-          npm config set registry https://registry.npmjs.org/
-          yarn config set npmRegistryServer "https://registry.npmjs.org"
-          yarn config set npmAuthToken ${{ secrets.npm_token }}
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -46,30 +41,30 @@ jobs:
 
       - name: Publish @kiichain/kiijs-proto
         continue-on-error: true
-        run: cd packages/proto && yarn npm publish --access public
+        run: cd packages/proto && npm publish --provenance --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-lcd
         continue-on-error: true
-        run: cd packages/lcd && yarn npm publish --access public
+        run: cd packages/lcd && npm publish --provenance --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-utils
         continue-on-error: true
-        run: cd packages/utils && yarn npm publish --access public
+        run: cd packages/utils && npm publish --provenance --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-evm
         continue-on-error: true
-        run: cd packages/evm && yarn npm publish --access public
+        run: cd packages/evm && npm publish --provenance --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-rwa
         continue-on-error: true
-        run: cd packages/rwa && yarn npm publish --access public
+        run: cd packages/rwa && npm publish --provenance --access public
         env:
-          YARN_NPM_AUTH_TOKEN: ${{ secrets.npm_token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
