@@ -44,6 +44,7 @@
     "postinstall": "yarn symlink"
   },
   "devDependencies": {
+    "@types/bun": "^1.2.18",
     "@types/jest": "^29.5.11",
     "@types/node": "^24.9.2",
     "@typescript-eslint/eslint-plugin": "^8.38.0",

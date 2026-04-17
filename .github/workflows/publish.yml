@@ -42,29 +42,19 @@ jobs:
       - name: Publish @kiichain/kiijs-proto
         continue-on-error: true
         run: cd packages/proto && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-lcd
         continue-on-error: true
         run: cd packages/lcd && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-utils
         continue-on-error: true
         run: cd packages/utils && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-evm
         continue-on-error: true
         run: cd packages/evm && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @kiichain/kiijs-rwa
         continue-on-error: true
         run: cd packages/rwa && npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
