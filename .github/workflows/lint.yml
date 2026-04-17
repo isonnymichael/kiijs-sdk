@@ -20,6 +20,8 @@ jobs:
         with:
           node-version: "20"
 
+      - uses: oven-sh/setup-bun@v2
+
       - name: Enable Corepack
         run: corepack enable
 
