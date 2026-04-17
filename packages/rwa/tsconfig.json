@@ -7,6 +7,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true, // Generate declaration files
+    "sourceMap": true,
     "outDir": "./dist/types", // Output directory for declaration files
     "rootDir": "./src" // Root directory of TypeScript source files
   },
