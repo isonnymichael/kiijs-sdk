@@ -25,12 +25,9 @@ export default [
       'unused-imports': unusedImports,
     },
     rules: {
-      // TypeScript rules — relaxed for proto-generated and SDK code that
-      // relies heavily on dynamic types from Cosmos/CosmJS libraries
+      // TypeScript rules
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': 'off', // handled by unused-imports plugin
-      '@typescript-eslint/no-unsafe-assignment': 'off', // proto-generated types use any
-      '@typescript-eslint/no-unsafe-call': 'off', // proto-generated types use any
 
       // Unused imports
       'unused-imports/no-unused-imports': 'error',
